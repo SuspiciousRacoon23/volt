@@ -79,6 +79,21 @@ export function fmtVolume(kg: number, unit: Unit): string {
   return `${shown.toLocaleString('en-US')} ${unitLabel(unit)}`;
 }
 
+/**
+ * Lifetime-scale volume for a narrow stat tile. `fmtVolume` is exact and grows
+ * to "204,375 kg", which overflows a half-width tile — this trades the last
+ * digits for a figure that fits and still reads honestly.
+ */
+export function fmtVolumeCompact(kg: number, unit: Unit): string {
+  const v = Math.max(0, finite(kg));
+  if (isLb(unit)) {
+    const lb = Math.round(kgToLb(v));
+    return lb < 10000 ? `${lb.toLocaleString('en-US')} lb` : `${(lb / 1000).toFixed(1)}k lb`;
+  }
+  const n = Math.round(v);
+  return n < 1000 ? `${n.toLocaleString('en-US')} kg` : `${(n / 1000).toFixed(1)} t`;
+}
+
 /** Parse free text a user typed. Returns null when it is not a number. */
 export function parseWeight(input: string, unit: Unit): number | null {
   if (typeof input !== 'string') return null;

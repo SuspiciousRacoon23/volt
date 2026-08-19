@@ -32,7 +32,7 @@ import {
 import {
   displayWeight,
   fmtClock,
-  fmtVolume,
+  fmtVolumeCompact,
   fmtWeightValue,
   readinessVerdict,
   setHapticsEnabled,
@@ -100,11 +100,11 @@ export default function ProfileScreen(): React.JSX.Element {
         <StatTile label="Workouts" value={life.workouts} style={{ flexGrow: 1, flexBasis: '46%' }} />
         <StatTile
           label="Lifted"
-          value={fmtVolume(life.volumeKg, unit)}
+          value={fmtVolumeCompact(life.volumeKg, unit)}
           style={{ flexGrow: 1, flexBasis: '46%' }}
         />
         <StatTile
-          label="Time under the bar"
+          label="Time lifting"
           value={fmtLongDuration(life.durationMs)}
           style={{ flexGrow: 1, flexBasis: '46%' }}
         />
